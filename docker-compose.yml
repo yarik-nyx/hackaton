@@ -1,0 +1,36 @@
+version: '3.5'
+
+services:
+  hackaton_postgres:
+    container_name: hackaton_postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ya
+      POSTGRES_PASSWORD: qwe
+      PGDATA: /data/postgres
+    volumes:
+       - postgrehack:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - hackaton
+    restart: unless-stopped
+
+  hackaton_pgadmin:
+    container_name: hackaton_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ya@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 7777
+    ports:
+      - 127.0.0.1:5050:80
+    networks:
+      - hackaton
+    restart: unless-stopped
+
+volumes:
+  postgrehack:
+
+networks:
+  hackaton:
+    driver: bridge
